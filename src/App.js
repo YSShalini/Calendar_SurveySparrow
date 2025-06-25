@@ -12,6 +12,7 @@ import { nanoid } from 'nanoid';
 import staticEvents from './data/events.json';
 import { FaPlus } from 'react-icons/fa';
 
+
 export default function App() {
   const [currentDate, setCurrentDate] = useState(dayjs());
   const [events, setEvents] = useState([]);
@@ -30,18 +31,48 @@ export default function App() {
     work: true,
     holiday: true,
     family: true,
+    personal: true,
   });
 
-  useEffect(() => {
-    const storedEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
-    const parsedEvents = storedEvents.map(e => ({
-      ...e,
-      start: new Date(e.start),
-      end: new Date(e.end),
-    }));
-    const merged = [...staticEvents, ...parsedEvents];
-    setEvents(merged);
-  }, []);
+
+useEffect(() => {
+  const storedEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+
+  const parsedStoredEvents = storedEvents.map(e => ({
+    ...e,
+    start: new Date(e.start),
+    end: new Date(e.end),
+  }));
+
+  const parsedStaticEvents = staticEvents.map(e => {
+    const startDateTime = dayjs(`${e.date} ${e.time}`);
+    const durationValue = parseInt(e.duration);
+    const durationType = e.duration.includes('h') ? 'hour' : 'minute';
+    const endDateTime = startDateTime.add(durationValue, durationType);
+
+    return {
+      id: e.id || nanoid(),
+      title: e.title,
+      type: e.type || 'personal',
+      date: e.date,
+      time: e.time,
+      duration: e.duration,
+      startTime: startDateTime.format('HH:mm'),
+      endTime: endDateTime.format('HH:mm'),
+      start: startDateTime.toDate(),
+      end: endDateTime.toDate(),
+      static: true
+    };
+  });
+
+  const merged = [...parsedStaticEvents, ...parsedStoredEvents];
+  setEvents(merged);
+
+  // ✅ Move console.log here
+  console.log("All Events:", merged);
+}, []);
+
+
 
   useEffect(() => {
     const staticEventIds = new Set(staticEvents.map(e => e.id));
@@ -117,28 +148,34 @@ export default function App() {
 
         {/* Main Section */}
         <div className="max-w-[95vw] sm:max-w-6xl mx-auto">
-          <div className="flex justify-between items-center mb-2">
-            <button
-              className={`ml-auto rounded-md px-4 py-2 transition-all font-medium text-sm ${
-                darkMode
-                  ? 'bg-gray-700 text-white hover:bg-blue-600'
-                  : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
-              }`}
-              onClick={() => setShowDetailedView(prev => !prev)}
-            >
-              {showDetailedView ? 'Calendar View' : 'Detailed View'}
-            </button>
-          </div>
+          <div className="relative">
+  {/* Calendar Header (centered title + profile) */}
+  <CalendarHeader
+    currentDate={currentDate}
+    nextMonth={nextMonth}
+    prevMonth={prevMonth}
+    darkMode={darkMode}
+    viewMode={viewMode}
+    setViewMode={setViewMode}
+    setCurrentDate={setCurrentDate}
+     events={filteredEvents}
+  />
 
-          <CalendarHeader
-            currentDate={currentDate}
-            nextMonth={nextMonth}
-            prevMonth={prevMonth}
-            darkMode={darkMode}
-            viewMode={viewMode}
-            setViewMode={setViewMode}
-            setCurrentDate={setCurrentDate}
-          />
+  {/* Detailed View Button - positioned separately */}
+  <div className="absolute right-0 top-[100px] z-20">
+    <button
+      className={`rounded-md px-4 py-2 transition-all font-medium text-sm ${
+        darkMode
+          ? 'bg-gray-700 text-white hover:bg-blue-600'
+          : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
+      }`}
+      onClick={() => setShowDetailedView(prev => !prev)}
+    >
+      {showDetailedView ? 'Calendar View' : 'Detailed View'}
+    </button>
+  </div>
+</div>
+
 
           {!showDetailedView ? (
             <div className={`border-2 rounded-xl shadow-2xl p-6 transition-all duration-300 backdrop-blur-xl ${darkMode 

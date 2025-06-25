@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { MonthYearPicker } from './MonthYearPicker';
-
+import profilephoto from '../assets/aboutphoto2.jpg';
 export default function CalendarHeader({
   currentDate,
   nextMonth,
@@ -28,6 +28,32 @@ export default function CalendarHeader({
 
   return (
     <>
+
+      <div className="flex items-center justify-between px-4 sm:px-6 -mt-16 mb-7 pt-1">
+  {/* Left: Sidebar Menu Icon Placeholder */}
+  <div className="w-8 h-8"></div>
+
+  {/* Center: App Name with calligraphic font */}
+  <h1
+    className="text-4xl font-handwritten tracking-wider text-center"
+    style={{
+      fontFamily: 'Pacifico, cursive',
+      color: darkMode ? '#f0e6ff' : '#3b0764',
+      marginTop: '6px',
+    }}
+  >
+    KairoPlan
+  </h1>
+
+  {/* Right: Profile Picture */}
+  <img
+    src={profilephoto}
+    alt="Profile"
+    className="w-10 h-10 rounded-full shadow-lg ring-2 ring-purple-400 mt-1"
+  />
+</div>
+
+
       <div className="mb-6">
         {/* Month Navigation */}
         <div className="flex items-center justify-center mb-4 gap-6">
@@ -43,16 +69,16 @@ export default function CalendarHeader({
           </button>
 
           <h2
-            className={`text-3xl font-extrabold tracking-tight cursor-pointer transition hover:scale-105 hover:underline ${
-              darkMode
-                ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-pink-300'
-                : 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-600'
-            }`}
-            onClick={() => setPickerOpen(true)}
-          >
-            {currentDate.format('MMMM YYYY')}
-          </h2>
-
+  className={`text-3xl font-extrabold tracking-tight cursor-pointer
+    transition-transform hover:scale-105 hover:underline
+    bg-gradient-to-r from-indigo-400 via-pink-500 to-purple-500
+    bg-[length:200%_200%] bg-clip-text text-transparent animate-gradient-x
+    ${darkMode ? '' : ''}
+  `}
+  onClick={() => setPickerOpen(true)}
+>
+  {currentDate.format('MMMM YYYY')}
+</h2>
           <button
             onClick={nextMonth}
             className={`p-2 rounded-full shadow-md transition-all duration-200 ${

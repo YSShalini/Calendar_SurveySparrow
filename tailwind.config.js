@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       animation: {
         fadeIn: "fadeIn 0.3s ease-out",
-        gradientX: "gradient-x 15s ease infinite", // 🔥 New animation
+        gradientX: "gradientX 5s ease infinite", // ✅ corrected name
       },
       keyframes: {
         fadeIn: {
@@ -17,8 +17,11 @@ module.exports = {
           "50%": { backgroundPosition: "100% 50%" },
         },
       },
+      fontFamily: {
+    handwritten: ['Pacifico', 'cursive'],
+  },
       backgroundSize: {
-        "200": "200% 200%", // Needed for smooth animation
+        "200": "200% 200%", // ✅ allows smoother animation
       },
       colors: {
         brand: {
@@ -26,6 +29,9 @@ module.exports = {
           light: "#A5B4FC",
           dark: "#4338CA",
         },
+      },
+      backdropBlur: {
+        xs: '2px', // ✅ correctly nested
       },
       boxShadow: {
         card: "0 4px 14px rgba(0, 0, 0, 0.1)",

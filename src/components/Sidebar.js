@@ -7,7 +7,7 @@ import {
   HelpCircle,
   X
 } from 'lucide-react';
-
+import profilephoto from '../assets/aboutphoto2.jpg';
 export default function Sidebar({
   onClose,
   toggleFilterType,
@@ -33,28 +33,45 @@ export default function Sidebar({
   };
 
   return (
-    <div className={`fixed top-0 left-0 h-full w-64 z-50 shadow-2xl transition-transform duration-300 ease-in-out transform rounded-r-2xl
-      ${darkMode ? 'bg-[#1e293b] text-white' : 'bg-white text-gray-800'}`}>
+    <div className={`fixed top-0 left-0 h-full w-64 z-50 backdrop-blur-xl bg-opacity-70 border-r-2 transition-transform duration-300 ease-in-out transform rounded-r-2xl
+  ${darkMode 
+    ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white border-white-700 shadow-xl'
+    : 'bg-gradient-to-br from-white via-blue-100 to-blue-190 text-gray-900 border-blue-300 shadow-2xl'}`}>
+
       
       {/* Header */}
       <div className="flex justify-between items-center p-5 border-b border-gray-300 dark:border-gray-700">
-        <div className="flex items-center">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
-            C
-          </div>
-          <h1 className="ml-3 font-bold text-xl tracking-wide">CalendarPro</h1>
-        </div>
-        <button onClick={onClose} className="hover:text-red-500 transition duration-150">
-          <X size={24} />
-        </button>
-      </div>
+  <div className="flex items-center">
+    {/* Brand Logo */}
+    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-yellow-400 to-pink-500 flex items-center justify-center shadow-md">
+      <span className="text-white text-2xl font-semibold">🕰️</span>
+    </div>
+
+    {/* Brand Name in Calligraphic Font */}
+    <h1
+  className="ml-3 text-2xl tracking-wider font-handwritten"
+  style={{
+    color: darkMode ? '#D1D5DB' : '#1F2937', // gray-300 for dark, gray-800 for light
+    fontFamily: 'Pacifico, cursive'
+  }}
+>
+  KairoPlan
+</h1>
+  </div>
+
+  <button onClick={onClose} className="hover:text-red-500 transition duration-150">
+    <X size={24} />
+  </button>
+</div>
+
 
       {/* Profile Card */}
       <div className="px-6 py-5">
-        <div className={`flex items-center gap-3 p-3 rounded-xl shadow-md backdrop-blur-md bg-opacity-70
-          ${darkMode ? 'bg-gray-800' : 'bg-white border border-gray-200'}`}>
+        <div className={`flex items-center gap-3 p-3 rounded-xl shadow-md backdrop-blur-md
+  ${darkMode ? 'bg-gray-700/60' : 'bg-white/80'} border border-transparent`}>
+
           <img
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+            src={profilephoto}
             alt="Profile"
             className="w-12 h-12 rounded-full object-cover ring-2 ring-blue-500"
           />
