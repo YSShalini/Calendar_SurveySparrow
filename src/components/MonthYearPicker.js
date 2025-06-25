@@ -57,7 +57,7 @@ export function MonthYearPicker({ isOpen, onClose, currentDate, onDateChange, da
   return (
     <div className={overlay}>
       <div className={`w-full max-w-md mx-4 animate-fade-in ${card}`}>
-        {/* Header */}
+
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">Select Month & Year</h2>
           <Button variant="ghost" size="icon" onClick={onClose}>
@@ -65,7 +65,7 @@ export function MonthYearPicker({ isOpen, onClose, currentDate, onDateChange, da
           </Button>
         </div>
 
-        {/* Year Selector */}
+       
         <div className="flex items-center justify-center gap-4 mb-6">
           <Button
             variant="outline"
@@ -86,7 +86,7 @@ export function MonthYearPicker({ isOpen, onClose, currentDate, onDateChange, da
           </Button>
         </div>
 
-        {/* Month Grid */}
+    
         <div className="grid grid-cols-3 gap-3 mb-6">
           {monthNames.map((month, index) => {
             const isSelected = selectedMonth === index;
@@ -111,7 +111,7 @@ export function MonthYearPicker({ isOpen, onClose, currentDate, onDateChange, da
           })}
         </div>
 
-        {/* Action Buttons */}
+      
         <div className="flex gap-3">
           <Button
             variant="outline"

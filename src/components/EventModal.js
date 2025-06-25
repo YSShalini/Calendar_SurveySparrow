@@ -54,7 +54,7 @@ export function EventModal({ isOpen, onClose, onAddEvent, selectedDate, darkMode
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
       <div className={`w-full max-w-lg mx-4 p-6 rounded-2xl shadow-2xl border ${bgColor} ${borderColor}`}>
-        {/* Header */}
+    
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-2">
             <CalendarPlus className="text-blue-500" />
@@ -65,9 +65,9 @@ export function EventModal({ isOpen, onClose, onAddEvent, selectedDate, darkMode
           </button>
         </div>
 
-        {/* Form */}
+   
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Title */}
+         
           <div>
             <label className="block mb-1 text-sm font-medium">Event Title</label>
             <input
@@ -80,7 +80,7 @@ export function EventModal({ isOpen, onClose, onAddEvent, selectedDate, darkMode
             />
           </div>
 
-          {/* Type */}
+        
           <div>
             <label className="block mb-1 text-sm font-medium">Event Type</label>
             <select
@@ -104,7 +104,7 @@ export function EventModal({ isOpen, onClose, onAddEvent, selectedDate, darkMode
             </div>
           </div>
 
-          {/* Date */}
+         
           <div>
             <label className="block mb-1 text-sm font-medium">Date</label>
             <input
@@ -116,7 +116,7 @@ export function EventModal({ isOpen, onClose, onAddEvent, selectedDate, darkMode
             />
           </div>
 
-          {/* Time */}
+         
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block mb-1 text-sm font-medium">Start Time</label>
@@ -140,7 +140,7 @@ export function EventModal({ isOpen, onClose, onAddEvent, selectedDate, darkMode
             </div>
           </div>
 
-          {/* Buttons */}
+         
           <div className="flex gap-4 pt-4">
             <button
               type="button"

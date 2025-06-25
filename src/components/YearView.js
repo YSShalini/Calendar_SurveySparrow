@@ -34,7 +34,6 @@ export default function YearView({ currentDate, events, onDateClick, onMonthClic
               }
             `}
           >
-            {/* Month Title */}
             <button
               onClick={() => onMonthClick(i)}
               className={`text-xl font-bold mb-3 tracking-wide transition-colors duration-200 ${
@@ -44,7 +43,6 @@ export default function YearView({ currentDate, events, onDateClick, onMonthClic
               {name}
             </button>
 
-            {/* Month Events Preview */}
             <div className="space-y-2">
               {monthEvents.slice(0, 3).map((e) => (
                 <div

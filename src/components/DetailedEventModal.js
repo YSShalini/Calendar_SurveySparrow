@@ -1,17 +1,11 @@
-// DetailedView.js (replace yours with this)
-
 import React from 'react';
 import { eventTypeIcons } from '../constants/eventIcons';
-import { FaClock } from 'react-icons/fa'; // Fallback icon
-
+import { FaClock } from 'react-icons/fa';
 import {
-  X,
-  Sun,
-  Moon,
-  Settings,
-  HelpCircle,
-  CheckSquare,
+  X, Sun, Moon, Settings, HelpCircle, CheckSquare
 } from 'lucide-react';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 import dayjs from 'dayjs';
 
 export default function DetailedView({
@@ -46,12 +40,10 @@ export default function DetailedView({
 
   return (
     <div className={`relative min-h-screen flex flex-col p-4 transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gradient-to-br from-white to-blue-50 text-gray-900'}`}>
-      {/* Sidebar */}
       <div
         className={`fixed top-0 left-0 h-full w-64 transition-transform duration-300 transform z-40 shadow-2xl rounded-r-xl
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-        ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}
-        `}
+        ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}
       >
         <div className="p-6 space-y-6">
           <div className="flex items-center justify-between">
@@ -114,7 +106,6 @@ export default function DetailedView({
         </div>
       </div>
 
-      {/* Main View */}
       <div className={`w-full max-w-7xl mx-auto rounded-xl shadow-xl overflow-hidden border transition duration-300 ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
         <div className="grid grid-cols-8">
           <div className="bg-transparent border-r border-gray-300 dark:border-gray-700"></div>
@@ -128,9 +119,8 @@ export default function DetailedView({
           ))}
         </div>
 
-        {/* Hour Rows */}
         <div className="grid grid-cols-8">
-          {/* Time Column */}
+         
           <div className="border-r border-gray-300 dark:border-gray-700 text-sm text-right">
             {hours.map((hour) => (
               <div key={hour} className="h-20 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
@@ -139,7 +129,7 @@ export default function DetailedView({
             ))}
           </div>
 
-          {/* Event Columns */}
+       
           {weekDates.map((date, dayIndex) => (
             <div key={dayIndex} className="border-r border-gray-200 dark:border-gray-700 relative">
               {hours.map((hour) => {
@@ -149,34 +139,54 @@ export default function DetailedView({
                     key={`${dayIndex}-${hour}`}
                     className="h-20 border-b border-gray-200 dark:border-gray-700 relative p-1"
                   >
-                    {hourEvents.map((event) => {
-                      const startHour = new Date(event.start).getHours();
-                      const endHour = new Date(event.end).getHours();
-                      const duration = Math.max(1, endHour - startHour);
-                      const isStartHour = hour === startHour;
-                      if (!isStartHour) return null;
+                    {hourEvents
+  .filter(event => new Date(event.start).getHours() === hour)
+  .map((event, index, allEvents) => {
+    const startHour = new Date(event.start).getHours();
+    const endHour = new Date(event.end).getHours();
+    const duration = Math.max(1, endHour - startHour);
 
-                      return (
-                        <div
-                          key={event.id}
-                          className={`absolute inset-x-1 top-0 rounded-lg shadow-md px-3 py-1 text-xs font-semibold text-white transition-all duration-200 hover:scale-[1.02] ${eventColors[event.type]}`}
-                          style={{
-                            height: `${duration * 5}rem`,
-                            top: '0.25rem',
-                          }}
-                        >
-                          <div className="flex items-center gap-1 truncate">
-  {eventTypeIcons[event.type] || <FaClock className="text-xs" />}
-  <span>{event.title}</span>
-</div>
-                          <div className="text-[0.65rem] opacity-90 flex items-center gap-1">
-  <FaClock className="text-[0.65rem]" />
-  {event.startTime} - {event.endTime}
-</div>
+    const overlapIndex = index; 
+    const offset = overlapIndex * 8; 
 
-                        </div>
-                      );
-                    })}
+    return (
+      <Tippy
+        key={event.id}
+        content={
+          <div className="text-sm font-medium">
+            <div>{event.title}</div>
+            <div className="text-xs text-gray-400">
+              ⏰ {event.startTime} - {event.endTime}
+            </div>
+            <div className="text-xs">📂 Type: {event.type}</div>
+            {event.description && <div className="text-xs mt-1 italic">{event.description}</div>}
+          </div>
+        }
+        placement="top"
+        animation="shift-away"
+        theme="light-border"
+      >
+        <div
+          className={`absolute left-1 right-1 rounded-lg shadow-md px-3 py-1 text-xs font-semibold text-white transition-all duration-200 hover:scale-[1.02] ${eventColors[event.type] || eventColors.default}`}
+          style={{
+            height: `${duration * 5}rem`,
+            top: `${offset + 4}px`,
+            zIndex: 10 + overlapIndex, 
+          }}
+        >
+          <div className="flex items-center gap-1 truncate">
+            {eventTypeIcons[event.type] || <FaClock className="text-xs" />}
+            <span>{event.title}</span>
+          </div>
+          <div className="text-[0.65rem] opacity-90 flex items-center gap-1">
+            <FaClock className="text-[0.65rem]" />
+            {event.startTime} - {event.endTime}
+          </div>
+        </div>
+      </Tippy>
+    );
+  })}
+
                   </div>
                 );
               })}

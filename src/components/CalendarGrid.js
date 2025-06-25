@@ -70,7 +70,9 @@ export default function CalendarGrid({ currentDate, events, onDateClick, onDelet
     const isCurrentMonth = date.month() === currentDate.month();
     const isCurrentDay = date.isToday();
 
-    const dayEvents = events.filter(e => dayjs(e.start).isSame(date, 'day'));
+    const dayEvents = events.filter(e => 
+  dayjs(e.start).isSame(date, 'day') && date.month() === currentDate.month()
+);
 
     const bgColor = isCurrentDay
       ? (darkMode
@@ -84,11 +86,28 @@ export default function CalendarGrid({ currentDate, events, onDateClick, onDelet
 
     days.push(
       <div
-        key={date.format('DD-MM-YYYY')}
-        className={`border h-40 p-2 rounded-xl shadow-md overflow-y-auto relative group transition-all duration-300 ease-in-out
-          ${bgColor} hover:${darkMode ? 'bg-gray-700' : 'bg-indigo-50'} cursor-pointer`}
-        onClick={() => isCurrentMonth && onDateClick(date)}
-      >
+  key={date.format('DD-MM-YYYY')}
+  className={`border h-40 p-2 rounded-xl shadow-md overflow-y-auto relative group transition-all duration-300 ease-in-out
+    ${bgColor} hover:${darkMode ? 'bg-gray-700' : 'bg-indigo-50'} cursor-pointer
+    ${dayEvents.length > 0 ? 'pl-2' : ''}`}
+  onClick={() => isCurrentMonth && onDateClick(date)}
+  style={{
+    borderLeft: dayEvents.length > 0
+      ? `4px solid ${
+          {
+            meeting: '#3B82F6',   
+            deadline: '#EF4444', 
+            birthday: '#EC4899',  
+            holiday: '#A855F7',   
+            work: '#10B981',      
+            family: '#F97316',    
+            personal: '#EAB308', 
+          }[dayEvents[0]?.type] || '#9CA3AF' 
+        }`
+      : 'none'
+  }}
+>
+
         <div className={`text-sm font-bold mb-2 ${!isCurrentMonth ? 'invisible' : ''} ${darkMode ? 'text-white' : 'text-gray-900'}`}>
   {date.format('D')}
 </div>
@@ -125,12 +144,30 @@ export default function CalendarGrid({ currentDate, events, onDateClick, onDelet
           animation="shift-away"
           theme="light-border"
         >
-          <div
-            className={`relative text-xs px-2 py-1 rounded-md flex justify-between items-center shadow-sm hover:shadow-md
-              ${colorClass} transition-all duration-200 animate-fadeIn
-              ${isConflict ? 'ring-2 ring-red-500 animate-pulse' : ''}
-            `}
-          >
+<div
+  className={`relative text-xs py-1 rounded-md flex justify-between items-center shadow-sm hover:shadow-md
+    transition-all duration-200 animate-fadeIn
+    ${isConflict ? 'ring-2 ring-red-500 animate-pulse' : ''}
+  `}
+  style={{
+    borderLeft: `4px solid ${
+      {
+        meeting: '#3B82F6',   
+        deadline: '#EF4444', 
+        birthday: '#EC4899',  
+        holiday: '#A855F7',   
+        work: '#10B981',      
+        family: '#F97316',    
+        personal: '#EAB308',  
+      }[event.type] || '#9CA3AF' 
+    }`,
+    backgroundColor: darkMode ? '#1F2937' : '#F9FAFB',
+    color: darkMode ? 'white' : 'black',
+    paddingLeft: '0.5rem',
+    paddingRight: '0.5rem',
+  }}
+>
+
             {isConflict && (
               <div className="absolute top-0 right-0 text-[10px] text-red-600 font-bold mr-[2px] mt-[1px]">⚠</div>
             )}

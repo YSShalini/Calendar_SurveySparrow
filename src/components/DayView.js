@@ -44,7 +44,7 @@ export default function DayView({ currentDate, events, onAddEvent, darkMode }) {
         darkMode ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white' : 'bg-gradient-to-br from-white via-blue-50 to-white text-black'
       }`}
     >
-      {/* Header */}
+      
       <div className="flex items-center justify-between mb-6">
         <h3 className={`text-2xl font-bold tracking-tight ${darkMode ? 'text-white' : 'text-gray-800'}`}>
           {currentDate.format('dddd, MMMM D')}
@@ -58,7 +58,7 @@ export default function DayView({ currentDate, events, onAddEvent, darkMode }) {
         </button>
       </div>
 
-      {/* Time Grid */}
+
       <div className="space-y-3">
         {timeSlots.map((time, idx) => {
           const event = getEventForTimeSlot(time);
@@ -75,12 +75,12 @@ export default function DayView({ currentDate, events, onAddEvent, darkMode }) {
                   : 'border-gray-200'
               }`}
             >
-              {/* Time Label */}
+            
               <div className={`w-20 text-sm font-semibold tracking-wide ${darkMode ? 'text-indigo-300' : 'text-gray-500'}`}>
                 {time}
               </div>
 
-              {/* Event Block */}
+    
               <div className="flex-1">
                 {event ? (
                   <div

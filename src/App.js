@@ -20,7 +20,7 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterTypes, setFilterTypes] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [viewMode, setViewMode] = useState('month');
   const [showDetailedView, setShowDetailedView] = useState(false);
 
@@ -68,7 +68,7 @@ useEffect(() => {
   const merged = [...parsedStaticEvents, ...parsedStoredEvents];
   setEvents(merged);
 
-  // ✅ Move console.log here
+
   console.log("All Events:", merged);
 }, []);
 
@@ -119,11 +119,14 @@ useEffect(() => {
   const prevMonth = () => setCurrentDate(currentDate.subtract(1, 'month'));
 
   return (
-    <div className={`min-h-screen transition-all duration-500 ${darkMode
-      ? 'bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-900 text-white'
-      : 'bg-gradient-to-tr from-blue-50 via-white to-blue-100 text-black'}`}>
+    <div className={`min-h-screen transition-all duration-500 ${
+  darkMode
+    ? 'bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-900 text-white'
+    : 'bg-gradient-to-tr from-yellow-50 via-sky-100 to-blue-100 text-gray-900'
+}`}>
 
-      {/* Sidebar */}
+
+  
       {sidebarOpen && (
         <Sidebar
           onClose={() => setSidebarOpen(false)}
@@ -136,9 +139,7 @@ useEffect(() => {
         />
       )}
 
-      {/* Page Padding */}
       <div className="p-4">
-        {/* Sidebar Toggle */}
         <button
           className={`text-2xl mb-4 transition-transform hover:scale-110 ${darkMode ? 'text-yellow-300' : 'text-blue-600'}`}
           onClick={() => setSidebarOpen(true)}
@@ -146,11 +147,9 @@ useEffect(() => {
           ☰
         </button>
 
-        {/* Main Section */}
         <div className="max-w-[95vw] sm:max-w-6xl mx-auto">
           <div className="relative">
-  {/* Calendar Header (centered title + profile) */}
-  <CalendarHeader
+   <CalendarHeader
     currentDate={currentDate}
     nextMonth={nextMonth}
     prevMonth={prevMonth}
@@ -161,7 +160,6 @@ useEffect(() => {
      events={filteredEvents}
   />
 
-  {/* Detailed View Button - positioned separately */}
   <div className="absolute right-0 top-[100px] z-20">
     <button
       className={`rounded-md px-4 py-2 transition-all font-medium text-sm ${
@@ -227,12 +225,14 @@ useEffect(() => {
               hours={[...Array(24)].map((_, i) => i)}
               events={filteredEvents}
               eventColors={{
-                meeting: 'bg-blue-500',
-                birthday: 'bg-pink-500',
-                deadline: 'bg-red-500',
-                work: 'bg-green-500',
-                holiday: 'bg-yellow-500',
-                family: 'bg-purple-500',
+                  meeting: 'bg-blue-500 text-white',
+  deadline: 'bg-red-500 text-white',
+  birthday: 'bg-pink-500 text-white',
+  holiday: 'bg-purple-500 text-white',
+  work: 'bg-green-500 text-white',
+  family: 'bg-orange-500 text-white',
+  personal: 'bg-yellow-500 text-black',
+  default: 'bg-gray-500 text-white',
               }}
               darkMode={darkMode}
               toggleSidebar={() => setSidebarOpen(prev => !prev)}
@@ -259,7 +259,6 @@ useEffect(() => {
           )}
         </div>
 
-        {/* Add Event FAB */}
         <button
           onClick={() => {
             setSelectedDate(dayjs().toDate());
@@ -271,7 +270,6 @@ useEffect(() => {
         </button>
       </div>
 
-      {/* Modal */}
       {isModalOpen && (
         <EventModal
           isOpen={isModalOpen}

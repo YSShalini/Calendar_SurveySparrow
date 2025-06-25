@@ -6,6 +6,14 @@
     "duration": "1h"
   },
   {
+  "id": "static-3",
+  "title": "Birthday",
+  "date": "2025-06-30",
+  "time": "06:00",
+  "duration": "4h",
+  "type": "birthday"
+},
+  {
     "title": "Doctor Appointment",
     "date": "2025-06-24",
     "time": "14:30",

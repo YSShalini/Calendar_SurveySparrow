@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { MonthYearPicker } from './MonthYearPicker';
 import profilephoto from '../assets/aboutphoto2.jpg';
+import kairo from '../assets/kairoplan-calendar.jpg';
 export default function CalendarHeader({
   currentDate,
   nextMonth,
@@ -30,11 +31,9 @@ export default function CalendarHeader({
     <>
 
       <div className="flex items-center justify-between px-4 sm:px-6 -mt-16 mb-7 pt-1">
-  {/* Left: Sidebar Menu Icon Placeholder */}
-  <div className="w-8 h-8"></div>
+   <div className="w-8 h-8"></div>
 
-  {/* Center: App Name with calligraphic font */}
-  <h1
+   <h1
     className="text-4xl font-handwritten tracking-wider text-center"
     style={{
       fontFamily: 'Pacifico, cursive',
@@ -45,8 +44,7 @@ export default function CalendarHeader({
     KairoPlan
   </h1>
 
-  {/* Right: Profile Picture */}
-  <img
+   <img
     src={profilephoto}
     alt="Profile"
     className="w-10 h-10 rounded-full shadow-lg ring-2 ring-purple-400 mt-1"
@@ -55,7 +53,6 @@ export default function CalendarHeader({
 
 
       <div className="mb-6">
-        {/* Month Navigation */}
         <div className="flex items-center justify-center mb-4 gap-6">
           <button
             onClick={prevMonth}
@@ -91,8 +88,7 @@ export default function CalendarHeader({
           </button>
         </div>
 
-        {/* View Modes + Search */}
-        <div className="flex items-center justify-between flex-wrap gap-4">
+         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex flex-wrap gap-2">
             {['day', 'week', 'month', 'year'].map((mode) => (
               <button
@@ -111,35 +107,37 @@ export default function CalendarHeader({
             ))}
           </div>
 
-          {/* Search */}
-          <div className="flex items-center gap-2 bg-opacity-40 backdrop-blur-md rounded-lg px-3 py-2 transition-all duration-300 shadow-inner border border-gray-300 dark:border-gray-600">
-            <input
-              type="text"
-              placeholder="Search events..."
-              className={`bg-transparent outline-none w-40 sm:w-64 text-sm placeholder-gray-400 ${
-                darkMode ? 'text-white' : 'text-gray-800'
-              }`}
-            />
-            <svg
-              className={`w-4 h-4 ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-4.35-4.35M5 11a6 6 0 1112 0 6 6 0 01-12 0z"
-              />
-            </svg>
-          </div>
+        
+<div className="relative w-40 sm:w-60">
+  <input
+    type="text"
+    placeholder="Search events..."
+    className={`w-full pl-3 pr-8 py-2 rounded-lg bg-opacity-40 backdrop-blur-md text-sm shadow-inner placeholder-gray-400 transition-all duration-300 ${
+      darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'
+    }`}
+  />
+  <svg
+    className={`absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 pointer-events-none ${
+      darkMode ? 'text-gray-300' : 'text-gray-500'
+    }`}
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M21 21l-4.35-4.35M5 11a6 6 0 1112 0 6 6 0 01-12 0z"
+    />
+  </svg>
+</div>
+
         </div>
       </div>
 
-      {/* Month-Year Picker Modal */}
-      <MonthYearPicker
+       <MonthYearPicker
         isOpen={pickerOpen}
         onClose={() => setPickerOpen(false)}
         currentDate={currentDate.toDate()}

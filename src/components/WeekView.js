@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { eventTypeIcons } from '../constants/eventIcons'; // ✅ Import from your provided file
+import { eventTypeIcons } from '../constants/eventIcons'; 
 import { FaClock } from 'react-icons/fa';
 const eventTypeColors = {
   meeting: "bg-blue-500",
